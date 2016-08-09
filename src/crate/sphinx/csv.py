@@ -11,7 +11,7 @@ from docutils.parsers.rst import directives
 
 class CSVFilterDirective(CSVTable):
     """ The CSV Filter directive renders csv defined in config
-        and filter rows that contains a specified string
+        and filter rows that contains a specified regex pattern
     """
 
     CSVTable.option_spec['exclude'] = directives.unchanged
@@ -20,10 +20,10 @@ class CSVFilterDirective(CSVTable):
         rows, max_cols = super().parse_csv_data_into_rows(csv_data, dialect, source)
         if 'exclude' in self.options:
             exclude_dict = ast.literal_eval(self.options['exclude'])
-            rows = self._apply_filter(rows, exclude_dict)
+            rows = self._apply_filter(rows, max_cols, exclude_dict)
         return rows, max_cols
 
-    def _apply_filter(self, rows, exclude_dict):
+    def _apply_filter(self, rows, max_cols, exclude_dict):
         result = []
 
         # append row that does not contain filter at column index
@@ -32,16 +32,10 @@ class CSVFilterDirective(CSVTable):
             for col_idx, pattern in exclude_dict.items():
                 # cell data value is located at hardcoded index pos. 3
                 # data type is always a string literal
-                try:
-                    val = row[col_idx][3][0]
-                    if re.match(pattern, val):
+                if max_cols-1 >= col_idx:
+                    if re.match(pattern, row[col_idx][3][0]):
                         exclude = True
                         break
-                except IndexError:
-                    error = self.state_machine.reporter.error(
-                        'Insufficient data supplied. Number of defined headers do not match ' 
-                        'the number of columns in the table data')
-                    raise SystemMessagePropagation(error)
                 
             if not exclude:
                 result.append(row)
