@@ -27,7 +27,7 @@ def read(path):
         return f.read()
 
 setup(
-    name='sphinx_csv_filter',
+    name='sphinx-csv-filter',
     version='0.1.0',
     url='https://github.com/crate/sphinx_csv_filter',
     author='CRATE Technology GmbH',
