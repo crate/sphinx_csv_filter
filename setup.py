@@ -22,13 +22,14 @@
 import os
 from setuptools import setup, find_packages
 
+
 def read(path):
     with open(os.path.join(os.path.dirname(__file__), path)) as f:
         return f.read()
 
 setup(
     name='sphinx-csv-filter',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/crate/sphinx_csv_filter',
     author='CRATE Technology GmbH',
     author_email='office@crate.io',
