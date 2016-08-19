@@ -1,15 +1,15 @@
 # -*- coding: utf-8; -*-
 
-import csv
 import ast
 import re
 
 from docutils.parsers.rst.directives.tables import CSVTable
 from docutils.utils import SystemMessagePropagation
-from docutils import statemachine
+
 
 def exclude_dict(argument):
     return ast.literal_eval(argument)
+
 
 def non_negative_int(argument):
     """
@@ -21,6 +21,7 @@ def non_negative_int(argument):
         return value
     else:
         raise ValueError('negative value defined; must be non-negative')
+
 
 def non_negative_int_list(argument):
     """
@@ -60,7 +61,7 @@ class CSVFilterDirective(CSVTable):
             for col_idx, pattern in exclude_dict.items():
                 # cell data value is located at hardcoded index pos. 3
                 # data type is always a string literal
-                if max_cols-1 >= col_idx:
+                if max_cols - 1 >= col_idx:
                     if re.match(pattern, row[col_idx][3][0]):
                         exclude = True
                         break
@@ -81,6 +82,7 @@ class CSVFilterDirective(CSVTable):
                     'The CSV data does not contain that many columns.')
                 raise SystemMessagePropagation(error)
         return prepared_rows, len(included_cols_list)
+
 
 def setup(sphinx):
     sphinx.add_directive('csv-table', CSVFilterDirective)
