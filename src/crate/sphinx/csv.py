@@ -44,7 +44,7 @@ class CSVFilterDirective(CSVTable):
     CSVTable.option_spec['included_cols'] = non_negative_int_list
 
     def parse_csv_data_into_rows(self, csv_data, dialect, source):
-        rows, max_cols = super().parse_csv_data_into_rows(csv_data, dialect, source)
+        rows, max_cols = super(CSVFilterDirective, self).parse_csv_data_into_rows(csv_data, dialect, source)
         if 'exclude' in self.options:
             rows = self._apply_filter(rows, max_cols, self.options['exclude'])
         if 'included_cols' in self.options:
