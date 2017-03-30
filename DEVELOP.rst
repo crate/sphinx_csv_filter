@@ -1,44 +1,74 @@
-=============================
-Sphinx CSV Filter Development
-=============================
+===============
+Developer Guide
+===============
 
-Development Setup
-=================
+Setup
+=====
 
-To get a development environment crate-python uses `buildout
-<https://pypi.python.org/pypi/zc.buildout/2.5.2>`_
+This project uses buildout_ to set up the development environment.
 
-Run `bootstrap.py`::
+To start things off, run::
 
-    python bootstrap.py
+    $ python bootstrap.py
 
-And afterwards run buildout::
+Then, run::
 
-    ./bin/buildout -N
+    $ ./bin/buildout -N
 
 Test
 ====
 
 The plugin can be tested by running::
 
-    bin/sphinx
+    $ bin/sphinx
 
-in the terminal. The output of a rendered example CSV can be found in the
-``out/html`` directory.
+The output of a rendered example CSV can be found in the ``out/html`` directory.
 
-Deployment to Pypi
-==================
+Preparing a Release
+===================
 
-To create the packages use::
+To create a new release, you must:
 
-    bin/py setup.py sdist bdist_wheel
+- Update ``__version__`` in ``setup.py``
 
-and then use `twine <https://pypi.python.org/pypi/twine>`_ to upload the
-packages::
+- Add a section for the new version in the ``CHANGES.txt`` file
 
-    twine upload dist/*
+- Commit your changes with a message like "prepare release x.y.z"
 
-If twine is not installed locally the regular setup.py upload can also be used,
-but does only support plaintext authentication::
+- Push to origin
 
-    bin/py setup.py sdist upload
+- Create a tag by running ``./devtools/create_tag.sh``
+
+PyPI Deployment
+===============
+
+To create the package use::
+
+    $ bin/py setup.py sdist bdist_wheel
+
+Then, use twine_ to upload the package to PyPI_::
+
+    $ bin/twine upload dist/*
+
+For this to work, you will need a personal PyPI account that is set up as a project admin.
+
+You'll also need to create a ``~/.pypirc`` file, like so::
+
+    [distutils]
+    index-servers =
+      pypi
+
+    [pypi]
+    repository=https://pypi.python.org/pypi
+    username=<USERNAME>
+    password=<PASSWORD>
+
+Here, ``<USERNAME>`` and ``<PASSWORD>`` should be replaced with your username and password, respectively.
+
+If you want to check the PyPI description before uploading, run::
+
+    $ bin/py setup.py check --strict --restructuredtext
+
+.. _buildout: https://pypi.python.org/pypi/zc.buildout
+.. _PyPI: https://pypi.python.org/pypi
+.. _twine: https://pypi.python.org/pypi/twine

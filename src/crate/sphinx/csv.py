@@ -6,7 +6,6 @@ import re
 from docutils.parsers.rst.directives.tables import CSVTable
 from docutils.utils import SystemMessagePropagation
 
-
 def exclude_dict(argument):
     return ast.literal_eval(argument)
 
