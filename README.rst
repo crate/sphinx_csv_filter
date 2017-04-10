@@ -52,7 +52,7 @@ In this example, rows from ``example.csv`` will be omitted from the output if th
 Contributing
 ============
 
-This project is primarily maintained by `Crate.io`_, but we welcome community
+This project is primarily maintained by Crate.io_, but we welcome community
 contributions!
 
 See the `developer docs`_ and the `contribution docs`_ for more information.
