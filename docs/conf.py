@@ -1,7 +1,3 @@
-import sys, os
-
-sys.path.append(os.path.abspath('../src'))
-
 # The suffix of source filenames.
 source_suffix = '.txt'
 

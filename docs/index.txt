@@ -5,7 +5,7 @@ Example Table
 This example excludes all rows if the value of column ``Attend?`` (Idx: 3)
 matches the regex pattern.
 
-.. csv-table:: Example Table
+.. csv-filter:: Example Table
    :header: Company,Contact,Country,Attend?
    :delim: U+0009
    :file: example.csv

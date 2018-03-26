@@ -84,4 +84,4 @@ class CSVFilterDirective(CSVTable):
 
 
 def setup(sphinx):
-    sphinx.add_directive('csv-table', CSVFilterDirective)
+    sphinx.add_directive('csv-filter', CSVFilterDirective)
