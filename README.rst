@@ -42,7 +42,7 @@ This plugin adds the ``:exclude:`` option to the csv-table_ directive. This opti
 
 Here's an example::
 
-    .. csv-table:: Example Table
+    .. csv-filter:: Example Table
        :header: Company,Contact,Country,Attend?
        :file: example.csv
        :exclude: {3: '(?i)Y\w*'}
