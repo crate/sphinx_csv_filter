@@ -5,5 +5,8 @@ CHANGES
 Unreleased
 ==========
 
-- BREAKING: Renamed directive from ``csv-table`` to ``csv-filter`` in
-  order not to override exisint ``csv-table`` directive.
+2018/03/26 0.2.0
+================
+
+- BREAKING: Renamed directive from ``csv-table`` to ``csv-filter`` in order not
+  to override exisint ``csv-table`` directive.

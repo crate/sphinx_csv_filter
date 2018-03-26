@@ -29,7 +29,7 @@ Preparing a Release
 
 To create a new release, you must:
 
-- Update ``__version__`` in ``setup.py``
+- Update ``version`` in ``setup.py``
 
 - Add a section for the new version in the ``CHANGES.txt`` file
 
