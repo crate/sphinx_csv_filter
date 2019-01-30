@@ -62,17 +62,14 @@ Help
 
 Looking for more help?
 
-- Check `StackOverflow`_ for common problems
-- Chat with us on `Slack`_
-- Get `paid support`_
+- Read the `project docs`_
+- Check out our `support channels`_
 
 .. _contribution docs: CONTRIBUTING.rst
 .. _Crate.io: http://crate.io/
 .. _csv-table: http://docutils.sourceforge.net/docs/ref/rst/directives.html#csv-table
 .. _developer docs: DEVELOP.rst
-.. _paid support: https://crate.io/pricing/
 .. _pip: https://pypi.python.org/pypi/pip
 .. _reStructuredText: http://www.sphinx-doc.org/en/stable/rest.html
-.. _Slack: https://crate.io/docs/support/slackin/
 .. _Sphinx: http://www.sphinx-doc.org/en/stable/
-.. _StackOverflow: https://stackoverflow.com/tags/crate
+.. _support channels: https://crate.io/support/
