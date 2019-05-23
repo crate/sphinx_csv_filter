@@ -78,7 +78,6 @@ Help
 
 Looking for more help?
 
-- Read the `project docs`_
 - Check out our `support channels`_
 
 .. _contribution docs: CONTRIBUTING.rst

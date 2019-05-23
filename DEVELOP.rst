@@ -9,18 +9,21 @@ This project uses buildout_ to set up the development environment.
 
 To start things off, run::
 
-    $ python bootstrap.py
+    $ python -m venv env
+    $ source env/bin/activate
 
 Then, run::
 
-    $ ./bin/buildout -N
+    $ pip install -e .
+    $ pip install -e .[testing]
+    $ pip install -e .[development]
 
 Test
 ====
 
 The plugin can be tested by running::
 
-    $ bin/sphinx
+    $ python setup.py build_sphinx
 
 The output of a rendered example CSV can be found in the ``out/html`` directory.
 
@@ -44,11 +47,11 @@ PyPI Deployment
 
 To create the package use::
 
-    $ bin/py setup.py sdist bdist_wheel
+    $ python setup.py sdist bdist_wheel
 
 Then, use twine_ to upload the package to PyPI_::
 
-    $ bin/twine upload dist/*
+    $ python -m twine upload dist/*
 
 For this to work, you will need a personal PyPI account that is set up as a project admin.
 
@@ -67,7 +70,7 @@ Here, ``<USERNAME>`` and ``<PASSWORD>`` should be replaced with your username an
 
 If you want to check the PyPI description before uploading, run::
 
-    $ bin/py setup.py check --strict --restructuredtext
+    $ python -m twine check dist/*
 
 .. _buildout: https://pypi.python.org/pypi/zc.buildout
 .. _PyPI: https://pypi.python.org/pypi

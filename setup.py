@@ -20,12 +20,14 @@
 # software solely pursuant to the terms of the relevant commercial agreement.
 
 import os
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 
 def read(path):
     with open(os.path.join(os.path.dirname(__file__), path)) as f:
         return f.read()
+
 
 setup(
     name='sphinx-csv-filter',
@@ -36,14 +38,30 @@ setup(
     package_dir={'': 'src'},
     description='Sphinx CSV filter extension for Crate Documentation',
     long_description=read('README.rst'),
+    long_description_content_type='text/x-rst',
     platforms=['any'],
     license='Apache License 2.0',
     keywords='crate sphinx csv',
     packages=find_packages('src'),
     namespace_packages=['crate'],
-    entry_points=dict(),
-    extras_require=dict(),
-    install_requires=[],
+    entry_points={},
+    extras_require={
+        "development": [
+            "setuptools",
+            "wheel",
+            "twine",
+        ],
+        "testing": [
+            "pytest",
+            "flake8",
+            "pytest-flake8",
+            "pytest-isort",
+        ]
+    },
+    install_requires=[
+        "Sphinx",
+    ],
+    python_requires=">=3.3",
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
