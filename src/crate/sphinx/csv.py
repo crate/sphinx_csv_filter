@@ -6,6 +6,7 @@ import re
 from docutils.parsers.rst.directives.tables import CSVTable
 from docutils.utils import SystemMessagePropagation
 
+
 def non_negative_int(argument):
     """
     Converts the argument into an integer.
@@ -41,15 +42,23 @@ class CSVFilterDirective(CSVTable):
     CSVTable.option_spec['included_cols'] = non_negative_int_list
 
     def parse_csv_data_into_rows(self, csv_data, dialect, source):
-        rows, max_cols = super(CSVFilterDirective, self).parse_csv_data_into_rows(csv_data, dialect, source)
+        rows, max_cols = super(
+            CSVFilterDirective, self
+        ).parse_csv_data_into_rows(csv_data, dialect, source)
         include_filters = exclude_filters = None
         if 'include' in self.options:
-            include_filters = {k: re.compile(v) for k, v in self.options['include'].items()}
+            include_filters = {
+                k: re.compile(v) for k, v in self.options['include'].items()
+            }
         if 'exclude' in self.options:
-            exclude_filters = {k: re.compile(v) for k, v in self.options['exclude'].items()}
+            exclude_filters = {
+                k: re.compile(v) for k, v in self.options['exclude'].items()
+            }
         rows = self._apply_filters(rows, max_cols, include_filters, exclude_filters)
         if 'included_cols' in self.options:
-            rows, max_cols = self._get_rows_with_included_cols(rows, self.options['included_cols'])
+            rows, max_cols = self._get_rows_with_included_cols(
+                rows, self.options['included_cols']
+            )
         return rows, max_cols
 
     def _apply_filters(self, rows, max_cols, include_filters, exclude_filters):
@@ -63,14 +72,16 @@ class CSVFilterDirective(CSVTable):
             # We generally include a row, ...
             include = True
             if include_filters:
-                # ... unless include filters are defined, then we generally exclude them, ...
+                # ... unless include filters are defined, then we generally
+                # exclude them, ...
                 include = False
                 for col_idx, pattern in include_filters.items():
                     # cell data value is located at hardcoded index pos. 3
                     # data type is always a string literal
                     if max_cols - 1 >= col_idx:
                         if pattern.match(row[col_idx][3][0]):
-                            # ... unless at least one of the defined filters matches its cell ...
+                            # ... unless at least one of the defined filters
+                            # matches its cell ...
                             include = True
                             break
 
@@ -81,7 +92,8 @@ class CSVFilterDirective(CSVTable):
                     # data type is always a string literal
                     if max_cols - 1 >= col_idx:
                         if pattern.match(row[col_idx][3][0]):
-                            # ... then we exclude a row if any of the defined exclude filters matches its cell.
+                            # ... then we exclude a row if any of the defined
+                            # exclude filters matches its cell.
                             include = False
                             break
 
