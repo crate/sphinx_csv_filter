@@ -6,10 +6,6 @@ import re
 from docutils.parsers.rst.directives.tables import CSVTable
 from docutils.utils import SystemMessagePropagation
 
-def exclude_dict(argument):
-    return ast.literal_eval(argument)
-
-
 def non_negative_int(argument):
     """
     Converts the argument into an integer.
@@ -40,31 +36,56 @@ class CSVFilterDirective(CSVTable):
         and filter rows that contains a specified regex pattern
     """
 
-    CSVTable.option_spec['exclude'] = exclude_dict
+    CSVTable.option_spec['include'] = ast.literal_eval
+    CSVTable.option_spec['exclude'] = ast.literal_eval
     CSVTable.option_spec['included_cols'] = non_negative_int_list
 
     def parse_csv_data_into_rows(self, csv_data, dialect, source):
         rows, max_cols = super(CSVFilterDirective, self).parse_csv_data_into_rows(csv_data, dialect, source)
+        include_filters = exclude_filters = None
+        if 'include' in self.options:
+            include_filters = {k: re.compile(v) for k, v in self.options['include'].items()}
         if 'exclude' in self.options:
-            rows = self._apply_filter(rows, max_cols, self.options['exclude'])
+            exclude_filters = {k: re.compile(v) for k, v in self.options['exclude'].items()}
+        rows = self._apply_filters(rows, max_cols, include_filters, exclude_filters)
         if 'included_cols' in self.options:
             rows, max_cols = self._get_rows_with_included_cols(rows, self.options['included_cols'])
         return rows, max_cols
 
-    def _apply_filter(self, rows, max_cols, exclude_dict):
+    def _apply_filters(self, rows, max_cols, include_filters, exclude_filters):
         result = []
 
-        # append row that does not contain filter at column index
-        for row in rows:
-            exclude = False
-            for col_idx, pattern in exclude_dict.items():
-                # cell data value is located at hardcoded index pos. 3
-                # data type is always a string literal
-                if max_cols - 1 >= col_idx:
-                    if re.match(pattern, row[col_idx][3][0]):
-                        exclude = True
-                        break
-            if not exclude:
+        header_rows = self.options.get('header-rows', 0)
+        # Always include header rows, if any
+        result.extend(rows[:header_rows])
+
+        for row in rows[header_rows:]:
+            # We generally include a row, ...
+            include = True
+            if include_filters:
+                # ... unless include filters are defined, then we generally exclude them, ...
+                include = False
+                for col_idx, pattern in include_filters.items():
+                    # cell data value is located at hardcoded index pos. 3
+                    # data type is always a string literal
+                    if max_cols - 1 >= col_idx:
+                        if pattern.match(row[col_idx][3][0]):
+                            # ... unless at least one of the defined filters matches its cell ...
+                            include = True
+                            break
+
+            # ... unless exclude filters are defined (as well) ...
+            if include and exclude_filters:
+                for col_idx, pattern in exclude_filters.items():
+                    # cell data value is located at hardcoded index pos. 3
+                    # data type is always a string literal
+                    if max_cols - 1 >= col_idx:
+                        if pattern.match(row[col_idx][3][0]):
+                            # ... then we exclude a row if any of the defined exclude filters matches its cell.
+                            include = False
+                            break
+
+            if include:
                 result.append(row)
 
         return result

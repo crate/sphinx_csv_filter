@@ -38,7 +38,23 @@ If you're using other extensions, edit the existing list, or add this::
 Use
 ===
 
-This plugin adds the ``:exclude:`` option to the csv-table_ directive. This option takes a Python dict specifying the column index (starting at zero) and a regular expression. Rows are excluded if the columnar value matches the supplied regular expression.
+This plugin adds the following options to the csv-table_ directive:
+
+``:included_cols:``
+    This is a comma-separated list of column indexes to include in the output.
+
+``:include:``
+    This option takes a Python dict specifying the column index (starting at
+    zero) and a regular expression. Rows are included if the columnar value
+    matches the supplied regular expression.
+
+``:exclude:``
+    This option takes a Python dict specifying the column index (starting at
+    zero) and a regular expression. Rows are excluded if the columnar value
+    matches the supplied regular expression.
+
+If a row matches an ``:include:`` as well as an ``:exclude:`` filter, the row
+with be excluded.
 
 Here's an example::
 

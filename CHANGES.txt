@@ -5,8 +5,12 @@ CHANGES
 Unreleased
 ==========
 
+- Add ``:include:`` option to ``csv-filter`` directive.
+
+- Respect the ``:header-rows:`` option when its value is non-zero.
+
 2018/03/26 0.2.0
 ================
 
 - BREAKING: Renamed directive from ``csv-table`` to ``csv-filter`` in order not
-  to override exisint ``csv-table`` directive.
+  to override existent ``csv-table`` directive.
