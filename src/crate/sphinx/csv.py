@@ -36,7 +36,6 @@ class CSVFilterDirective(CSVTable):
     """ The CSV Filter directive renders csv defined in config
         and filter rows that contains a specified regex pattern
     """
-
     CSVTable.option_spec['include'] = ast.literal_eval
     CSVTable.option_spec['exclude'] = ast.literal_eval
     CSVTable.option_spec['included_cols'] = non_negative_int_list

@@ -15,11 +15,17 @@ To start things off, run::
 Then, run::
 
     $ pip install -e .
-    $ pip install -e .[testing]
-    $ pip install -e .[development]
 
 Test
 ====
+
+To get the test dependencies run the following command::
+
+    $ pip install -e .[testing]
+
+To run the tests::
+
+    $ pytest
 
 The plugin can be tested by running::
 
@@ -44,6 +50,10 @@ To create a new release, you must:
 
 PyPI Deployment
 ===============
+
+To install the development dependencies run the following command::
+
+    $ pip install -e .[development]
 
 To create the package use::
 
