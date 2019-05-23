@@ -14,3 +14,4 @@ Unreleased
 
 - BREAKING: Renamed directive from ``csv-table`` to ``csv-filter`` in order not
   to override existent ``csv-table`` directive.
+
