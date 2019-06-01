@@ -70,19 +70,17 @@ class CSVFilterDirective(CSVTable):
         for row in rows[header_rows:]:
             # We generally include a row, ...
             include = True
-            if include_filters:
-                # ... unless include filters are defined, then we generally
-                # exclude them, ...
-                include = False
-                for col_idx, pattern in include_filters.items():
-                    # cell data value is located at hardcoded index pos. 3
-                    # data type is always a string literal
-                    if max_cols - 1 >= col_idx:
-                        if pattern.match(row[col_idx][3][0]):
-                            # ... unless at least one of the defined filters
-                            # matches its cell ...
-                            include = True
-                            break
+            for col_idx, pattern in include_filters.items():
+                # cell data value is located at hardcoded index pos. 3
+                # data type is always a string literal
+                if max_cols - 1 >= col_idx:
+                    # sanitize to empty string if cell is empty
+                    cell = row[col_idx][3][0] if row[col_idx][3] else ""
+                    if not pattern.match(cell):
+                        # ... unless any of the include filters do not match
+                        # it's cell ...
+                        include = False
+                        break
 
             # ... unless exclude filters are defined (as well) ...
             if include and exclude_filters:
@@ -90,7 +88,9 @@ class CSVFilterDirective(CSVTable):
                     # cell data value is located at hardcoded index pos. 3
                     # data type is always a string literal
                     if max_cols - 1 >= col_idx:
-                        if pattern.match(row[col_idx][3][0]):
+                        # sanitize to empty string if cell is empty
+                        cell = row[col_idx][3][0] if row[col_idx][3] else ""
+                        if pattern.match(cell):
                             # ... then we exclude a row if any of the defined
                             # exclude filters matches its cell.
                             include = False
