@@ -110,6 +110,12 @@ rows = [
         (0, 0, 0, ['Roland Mendel']),
         (0, 0, 0, ['Austria']),
         (0, 0, 0, ['NO']),
+    ],
+    [
+        (0, 0, 0, ['Wernher von Braun']),
+        (0, 0, 0, ['Hans Koenigsmann']),
+        (0, 0, 0, ['‎Germany']),
+        (0, 0, 0, []),  # Empty cell
     ]
 ]
 
@@ -122,13 +128,31 @@ def test_apply_none_filters():
 def test_apply_exclude_filters():
     exclude_filters = {3: re.compile(r'(?i)Y\w*', re.IGNORECASE)}
     result = directive._apply_filters(rows, 4, None, exclude_filters)
-    assert result == [rows[2]]
+    assert result == [rows[2], rows[3]]
+
+
+def test_apply_multi_exclude_filters():
+    exclude_filters = {
+        0: re.compile(r'Centro', re.IGNORECASE),
+        3: re.compile(r'NO', re.IGNORECASE)
+    }
+    result = directive._apply_filters(rows, 4, None, exclude_filters)
+    assert result == [rows[1], rows[3]]
 
 
 def test_apply_include_filters():
     include_filter = {3: re.compile(r'(?i)n\w*', re.IGNORECASE)}
     result = directive._apply_filters(rows, 4, include_filter, None)
     assert result == [rows[2]]
+
+
+def test_apply_multi_include_filters():
+    include_filter = {
+        2: re.compile(r'Ger', re.IGNORECASE),
+        3: re.compile(r'y', re.IGNORECASE)
+    }
+    result = directive._apply_filters(rows, 4, include_filter, None)
+    assert result == [rows[1]]
 
 
 def test_apply_include_exclude_filters():

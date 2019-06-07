@@ -46,14 +46,12 @@ This plugin adds the following options to the csv-table_ directive:
 ``:include:``
     This option takes a Python dict specifying the column index (starting at
     zero) and a regular expression. Rows are included if the columnar value
-    matches the supplied regular expression.
-    If multiple filters are given, row is included if all columns match.
+    matches *all* supplied regular expressions.
 
 ``:exclude:``
     This option takes a Python dict specifying the column index (starting at
     zero) and a regular expression. Rows are excluded if the columnar value
-    matches the supplied regular expression.
-    If multiple filters are given, row is excluded if any columns match.
+    matches *any* supplied regular expressions.
 
 If a row matches an ``:include:`` as well as an ``:exclude:`` filter, the row
 with be excluded.

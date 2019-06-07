@@ -70,19 +70,20 @@ class CSVFilterDirective(CSVTable):
         for row in rows[header_rows:]:
             # We generally include a row, ...
             include = True
-            for col_idx, pattern in include_filters.items():
-                # cell data value is located at hardcoded index pos. 3
-                # data type is always a string literal
-                if max_cols - 1 >= col_idx:
-                    # sanitize to empty string if cell is empty
-                    cell = row[col_idx][3][0] if row[col_idx][3] else ""
-                    if not pattern.match(cell):
-                        # ... unless any of the include filters do not match
-                        # it's cell ...
-                        include = False
-                        break
+            if include_filters:
+                for col_idx, pattern in include_filters.items():
+                    # cell data value is located at hardcoded index pos. 3
+                    # data type is always a string literal
+                    if max_cols - 1 >= col_idx:
+                        # sanitize to empty string if cell is empty
+                        cell = row[col_idx][3][0] if row[col_idx][3] else ""
+                        if not pattern.match(cell):
+                            # ... unless any of the include filters do not match
+                            # its cell ...
+                            include = False
+                            break
 
-            # ... unless exclude filters are defined (as well) ...
+            # ... or unless exclude filters are defined (as well) ...
             if include and exclude_filters:
                 for col_idx, pattern in exclude_filters.items():
                     # cell data value is located at hardcoded index pos. 3
