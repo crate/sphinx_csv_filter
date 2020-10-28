@@ -3,6 +3,7 @@ from copy import copy
 from unittest import mock
 
 import pytest
+
 from crate.sphinx import csv
 from crate.sphinx.csv import CSVFilterDirective
 
