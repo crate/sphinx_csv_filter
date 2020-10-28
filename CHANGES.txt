@@ -5,6 +5,9 @@ CHANGES
 Unreleased
 ==========
 
+2020/10/28 0.3.0
+================
+
 - Add ``:include:`` option to ``csv-filter`` directive.
 
 - Respect the ``:header-rows:`` option when its value is non-zero.
