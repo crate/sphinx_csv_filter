@@ -51,11 +51,11 @@ setup(
         "development": [
             "build",
             "setuptools",
-            "wheel",
             "twine",
+            "wheel",
         ],
         "testing": [
-            "flake8",
+            "flake8<5",
             "pytest",
             "pytest-cov",
             "pytest-flake8",
