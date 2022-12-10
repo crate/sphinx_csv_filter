@@ -33,7 +33,7 @@ def non_negative_int_list(argument):
 
 
 class CSVFilterDirective(CSVTable):
-    """ The CSV Filter directive renders csv defined in config
+    """ The CSV filter directive renders csv defined in config
         and filter rows that contains a specified regex pattern
     """
     CSVTable.option_spec['include'] = ast.literal_eval
