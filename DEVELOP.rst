@@ -57,7 +57,7 @@ To install the development dependencies run the following command::
 
 To create the package use::
 
-    $ python setup.py sdist bdist_wheel
+    $ python -m build
 
 Then, use twine_ to upload the package to PyPI_::
 
