@@ -1,6 +1,6 @@
 # -*- coding: utf-8; -*-
 #
-# Licensed to CRATE Technology GmbH ("Crate") under one or more contributor
+# Licensed to Crate.IO GmbH ("Crate") under one or more contributor
 # license agreements.  See the NOTICE file distributed with this work for
 # additional information regarding copyright ownership.  Crate licenses
 # this file to you under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ setup(
     name='sphinx-csv-filter',
     version='0.3.0',
     url='https://github.com/crate/sphinx_csv_filter',
-    author='CRATE Technology GmbH',
+    author='Crate.IO GmbH',
     author_email='office@crate.io',
     package_dir={'': 'src'},
     description='Sphinx CSV filter extension for Crate Documentation',
