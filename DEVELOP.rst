@@ -9,8 +9,8 @@ This project uses buildout_ to set up the development environment.
 
 To start things off, run::
 
-    $ python -m venv env
-    $ source env/bin/activate
+    $ python -m venv .venv
+    $ source .venv/bin/activate
 
 Then, run::
 
