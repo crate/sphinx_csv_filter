@@ -59,6 +59,7 @@ setup(
         ]
     },
     install_requires=[
+        "docutils<0.19",
         "Sphinx",
     ],
     python_requires=">=3.3",
