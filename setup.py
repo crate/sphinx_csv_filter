@@ -47,6 +47,7 @@ setup(
     entry_points={},
     extras_require={
         "development": [
+            "build",
             "setuptools",
             "wheel",
             "twine",
