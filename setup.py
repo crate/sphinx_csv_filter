@@ -55,8 +55,9 @@ setup(
             "twine",
         ],
         "testing": [
-            "pytest",
             "flake8",
+            "pytest",
+            "pytest-cov",
             "pytest-flake8",
             "pytest-isort",
         ]
