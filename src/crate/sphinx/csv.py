@@ -1,7 +1,6 @@
-# -*- coding: utf-8; -*-
-
 import ast
 import re
+import sys
 
 from docutils.parsers.rst.directives.tables import CSVTable
 from docutils.utils import SystemMessagePropagation
@@ -38,6 +37,7 @@ class CSVFilterDirective(CSVTable):
     """
     CSVTable.option_spec['include'] = ast.literal_eval
     CSVTable.option_spec['exclude'] = ast.literal_eval
+    CSVTable.option_spec['include_col'] = ast.literal_eval
     CSVTable.option_spec['included_cols'] = non_negative_int_list
 
     def parse_csv_data_into_rows(self, csv_data, dialect, source):
@@ -58,6 +58,12 @@ class CSVFilterDirective(CSVTable):
             rows, max_cols = self._get_rows_with_included_cols(
                 rows, self.options['included_cols']
             )
+        if 'include_col' in self.options:
+            include_col_filters = {
+                k: re.compile(v) for k, v in self.options['include_col'].items()
+            }
+            col_list = self._get_include_col_indexes(rows, include_col_filters)
+            rows, max_cols = self._get_rows_with_included_cols(rows, col_list)
         return rows, max_cols
 
     def _apply_filters(self, rows, max_cols, include_filters, exclude_filters):
@@ -101,6 +107,17 @@ class CSVFilterDirective(CSVTable):
 
         return result
 
+    def _get_include_col_indexes(self, rows, include_col_filters):
+        prepared_rows = []
+        col_index_list = []
+        assert(len(include_col_filters) == 1)
+        for row_idx, pattern in include_col_filters.items():
+            for col_idx, element in enumerate(rows[row_idx]):
+                if element[3]:
+                    if pattern.match(element[3][0]):
+                        col_index_list.append(col_idx)
+        return col_index_list
+
     def _get_rows_with_included_cols(self, rows, included_cols_list):
         prepared_rows = []
         for row in rows:
@@ -113,7 +130,3 @@ class CSVFilterDirective(CSVTable):
                     'The CSV data does not contain that many columns.')
                 raise SystemMessagePropagation(error)
         return prepared_rows, len(included_cols_list)
-
-
-def setup(sphinx):
-    sphinx.add_directive('csv-filter', CSVFilterDirective)
