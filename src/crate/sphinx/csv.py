@@ -1,6 +1,7 @@
+# -*- coding: utf-8; -*-
+
 import ast
 import re
-import sys
 
 from docutils.parsers.rst.directives.tables import CSVTable
 from docutils.utils import SystemMessagePropagation
@@ -107,12 +108,27 @@ class CSVFilterDirective(CSVTable):
 
         return result
 
+
     def _get_include_col_indexes(self, rows, include_col_filters):
+        """Function for getting a list of column indices based on a row number and a regex
+
+        This function will search for matches of a given regular expression on the contents of a given row and will
+        return the column indeces for each column value in that row that returns a match
+
+        Args:
+            rows (list): The full contents of the CSV table, organized as a 2-dimensional array (rows -> columns)
+            include_col_filters (dict) : A dictionary containing the row number to search in as "key" and the regex to
+                apply as "value". This implementation limits the amount of rows to search to a maximum of 1.
+        """
         prepared_rows = []
         col_index_list = []
-        assert(len(include_col_filters) == 1)
+        assert(len(include_col_filters) == 1) # We limit the amount of rows to search to 1. Could be extended.
+        # The line above assures that include_col_filters only has one element, so a for loop seems unnecessary.
+        # Could be replaced with something like list(include_col_filters.items())[0]
         for row_idx, pattern in include_col_filters.items():
             for col_idx, element in enumerate(rows[row_idx]):
+                # cell data value is located at hardcoded index pos. 3
+                # data type is always a string literal
                 if element[3]:
                     if pattern.match(element[3][0]):
                         col_index_list.append(col_idx)
@@ -130,3 +146,7 @@ class CSVFilterDirective(CSVTable):
                     'The CSV data does not contain that many columns.')
                 raise SystemMessagePropagation(error)
         return prepared_rows, len(included_cols_list)
+
+
+def setup(sphinx):
+    sphinx.add_directive('csv-filter', CSVFilterDirective)
