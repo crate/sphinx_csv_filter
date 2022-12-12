@@ -5,7 +5,17 @@ CHANGES
 Unreleased
 ==========
 
-- Update some dependency versions
+
+2022/12/12 0.4.0
+================
+
+This is a maintenance release. No functionality has been changed.
+
+- Limit runtime dependency to ``docutils<0.19``, because the code
+  is not compatible with more recent versions yet.
+- Adjust a few other dependency versions.
+- Improve documentation.
+- Add CI configuration on GHA.
 
 
 2020/10/28 0.3.0
@@ -14,6 +24,7 @@ Unreleased
 - Add ``:include:`` option to ``csv-filter`` directive.
 
 - Respect the ``:header-rows:`` option when its value is non-zero.
+
 
 2018/03/26 0.2.0
 ================
