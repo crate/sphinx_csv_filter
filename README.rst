@@ -2,7 +2,7 @@
 Sphinx CSV filter
 =================
 
-.. image:: https://github.com/crate/sphinx_csv_filter/workflows/tests.yml/badge.svg
+.. image:: https://github.com/crate/sphinx_csv_filter/actions/workflows/tests.yml/badge.svg
     :target: https://github.com/crate/sphinx_csv_filter/actions/workflows/tests.yml
     :alt: CI outcome
 
