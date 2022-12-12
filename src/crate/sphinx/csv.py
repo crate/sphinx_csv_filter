@@ -119,6 +119,9 @@ class CSVFilterDirective(CSVTable):
             rows (list): The full contents of the CSV table, organized as a 2-dimensional array (rows -> columns)
             include_col_filters (dict) : A dictionary containing the row number to search in as "key" and the regex to
                 apply as "value". This implementation limits the amount of rows to search to a maximum of 1.
+
+        Returns:
+            list: list of all column indices that yielded a regex match.
         """
         prepared_rows = []
         col_index_list = []
