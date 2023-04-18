@@ -117,3 +117,7 @@ class CSVFilterDirective(CSVTable):
 
 def setup(sphinx):
     sphinx.add_directive('csv-filter', CSVFilterDirective)
+    return {
+        'parallel_read_safe': True,
+        'parallel_write_safe': True,
+    }
