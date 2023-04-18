@@ -31,7 +31,7 @@ def read(path):
 
 setup(
     name='sphinx-csv-filter',
-    version='0.4.0',
+    version='0.4.1',
     url='https://github.com/crate/sphinx_csv_filter',
     author='Crate.IO GmbH',
     author_email='office@crate.io',

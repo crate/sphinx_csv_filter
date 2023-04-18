@@ -6,6 +6,9 @@ Unreleased
 ==========
 
 
+2023/04/18 0.4.1
+================
+
 - Declare extension as safe for parallel reading and writing
 
 
