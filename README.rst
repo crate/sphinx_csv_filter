@@ -6,7 +6,7 @@ Sphinx CSV filter
     :target: https://github.com/crate/sphinx_csv_filter/actions/workflows/tests.yml
     :alt: CI outcome
 
-.. image:: https://codecov.io/gh/crate/sphinx_csv_filter/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/crate/sphinx_csv_filter/branch/main/graph/badge.svg
     :target: https://app.codecov.io/gh/crate/sphinx_csv_filter
     :alt: Test suite code coverage
 
