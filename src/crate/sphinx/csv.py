@@ -38,6 +38,7 @@ class CSVFilterDirective(CSVTable):
     """
     CSVTable.option_spec['include'] = ast.literal_eval
     CSVTable.option_spec['exclude'] = ast.literal_eval
+    CSVTable.option_spec['include_col'] = ast.literal_eval
     CSVTable.option_spec['included_cols'] = non_negative_int_list
 
     def parse_csv_data_into_rows(self, csv_data, dialect, source):
@@ -58,6 +59,12 @@ class CSVFilterDirective(CSVTable):
             rows, max_cols = self._get_rows_with_included_cols(
                 rows, self.options['included_cols']
             )
+        if 'include_col' in self.options:
+            include_col_filters = {
+                k: re.compile(v) for k, v in self.options['include_col'].items()
+            }
+            col_list = self._get_include_col_indexes(rows, include_col_filters)
+            rows, max_cols = self._get_rows_with_included_cols(rows, col_list)
         return rows, max_cols
 
     def _apply_filters(self, rows, max_cols, include_filters, exclude_filters):
@@ -100,6 +107,42 @@ class CSVFilterDirective(CSVTable):
                 result.append(row)
 
         return result
+
+    def _get_include_col_indexes(self, rows, include_col_filters):
+        """
+        Get a list of column indices based on a row number and a regex.
+
+        This function will search for matches of a given regular expression on the
+        contents of a given row and will return the column indices for each column
+        value in that row that returns a match.
+
+        Args:
+            rows (list): The full contents of the CSV table, organized as a
+                         2-dimensional array (rows -> columns).
+            include_col_filters (dict): A dictionary containing the row number to
+                                        search in as "key" and the regex to apply as
+                                        "value". This implementation limits the amount
+                                        of rows to search to a maximum of 1.
+
+        Returns:
+            list: list of all column indices that yielded a regex match.
+        """
+        col_index_list = []
+
+        # We limit the amount of rows to search to 1. Could be extended.
+        assert(len(include_col_filters) == 1)
+
+        # The line above assures that include_col_filters only has one element, so a
+        # for loop seems unnecessary.
+        # Could be replaced with something like list(include_col_filters.items())[0]
+        for row_idx, pattern in include_col_filters.items():
+            for col_idx, element in enumerate(rows[row_idx]):
+                # cell data value is located at hardcoded index pos. 3
+                # data type is always a string literal
+                if element[3]:
+                    if pattern.match(element[3][0]):
+                        col_index_list.append(col_idx)
+        return col_index_list
 
     def _get_rows_with_included_cols(self, rows, included_cols_list):
         prepared_rows = []
