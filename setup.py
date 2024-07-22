@@ -55,7 +55,7 @@ setup(
             "wheel",
         ],
         "testing": [
-            "flake8<5",
+            "flake8",
             "pytest",
             "pytest-cov",
             "pytest-flake8",
