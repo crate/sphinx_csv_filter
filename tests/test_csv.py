@@ -47,7 +47,7 @@ def test_non_negative_int_list(input, expected):
 directive_params = ['Company,Contact,Country,Attend?'], None, 'source'
 
 directive = CSVFilterDirective(
-    None, None, None, None, None, None, None, None, None)
+    None, None, None, None, None, None, None, None, mock.Mock())
 tmp_directive_options = {
     'header': 'Company,Contact,Country,Attend?',
     'delim': '\t',
