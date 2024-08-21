@@ -5,6 +5,9 @@ CHANGES
 Unreleased
 ==========
 
+2024/08/21 0.4.2
+================
+- Maintenance release, refreshing dependencies. Thanks, @freakboy3742.
 
 2023/04/18 0.4.1
 ================
