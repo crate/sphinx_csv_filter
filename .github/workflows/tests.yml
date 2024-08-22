@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-22.04']
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
       fail-fast: true
 
     steps:
@@ -40,7 +40,7 @@ jobs:
         run: pytest
 
       - name: Build documentation
-        run: python setup.py build_sphinx
+        run: python -m sphinx --fail-on-warning --builder html docs out
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov

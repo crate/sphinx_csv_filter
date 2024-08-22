@@ -1,3 +1,5 @@
+project = "sphinx"
+
 # The suffix of source filenames.
 source_suffix = '.txt'
 
