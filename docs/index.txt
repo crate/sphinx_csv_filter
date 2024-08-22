@@ -4,10 +4,9 @@ Example Table
 
 This example excludes all rows if the value of column ``Attend?`` (Idx: 3)
 matches the regex pattern. It should display 3 columns, and 1 row, with
-details for "Ernst Handel", with a table header.
+details for "Ernst Handel", with *no* table header.
 
 .. csv-filter:: Example Table
-   :header: Company,Contact,Country,Attend?
    :delim: U+0009
    :file: example.csv
    :exclude: {3: '(?i)Y\w*'}
